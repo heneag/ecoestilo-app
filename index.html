@@ -73,7 +73,7 @@
             color:#444;
         }
         
-        input[type="text"], input[type="password"], select {
+        input[type="text"], input[type="password"], select, textarea {
             width:100%;
             padding:12px 14px;
             margin:8px 0;
@@ -85,7 +85,7 @@
             box-sizing: border-box;
         }
         
-        input[type="text"]:focus, input[type="password"]:focus, select:focus {
+        input[type="text"]:focus, input[type="password"]:focus, select:focus, textarea:focus {
             border-color: var(--rosa-principal);
             box-shadow: 0 0 8px rgba(255,105,180,0.4);
             outline:none;
@@ -350,7 +350,7 @@
             text-align: center; /* centrado como antes */
         }
         
-        #codigo, #precio {
+        #codigo, #precio, #marca, #descripcion {
             width: 250px; /* Ancho del input */
             padding: 10px 15px; /* Espacio interno */
             border: 2px solid #ff0080; /* Borde rosa */
@@ -362,13 +362,13 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra suave */
         }
         
-        #codigo::placeholder, #precio::placeholder {
+        #codigo::placeholder, #precio::placeholder, #marca::placeholder, #descripcion::placeholder {
             color: #c4709a; /* Color del placeholder */
             opacity: 0.7; /* Leve transparencia */
             font-style: italic; /* Cursiva para estilo */
         }
         
-        #codigo:focus, #precio:focus {
+        #codigo:focus, #precio:focus, #marca:focus, #descripcion:focus {
             border-color: #6666ff; /* Cambia color del borde al enfocar */
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
@@ -498,6 +498,34 @@
                 flex-direction: column;
             }
         }
+        
+        /* Nuevos estilos para las mejoras */
+        .hashtag-container, .texto-descripcion-container {
+            margin: 15px 0;
+        }
+        
+        .hashtag-container textarea, .texto-descripcion-container textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .talla-group {
+            margin-bottom: 10px;
+        }
+        
+        .talla-group-title {
+            font-weight: 600;
+            color: #ff0080;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        .talla-buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -526,7 +554,7 @@
 
         <div class="titulo-label2">
             <label for="categoria"><span><br>Categoría</span></label>
-            <select id="categoria" onchange="toggleTallas()">
+            <select id="categoria" onchange="toggleTallas(); generarHashtags(); generarTextoDescripcion();">
                 <option value="Dama">Dama</option>
                 <option value="Caballero">Caballero</option>
                 <option value="Niño">Niño</option>
@@ -539,18 +567,28 @@
         </div>
 
         <div class="titulo-label2">
+            <label for="descripcion"><span><br>Descripción del Producto</span></label>
+            <input type="text" id="descripcion" placeholder="Ejemplo: Blusa corta blanca" oninput="generarTextoDescripcion()">
+        </div>
+
+        <div class="titulo-label2">
+            <label for="marca"><span><br>Marca</span></label>
+            <input type="text" id="marca" placeholder="Ejemplo: Hollister" oninput="generarTextoDescripcion()">
+        </div>
+
+        <div class="titulo-label2">
             <label for="codigo"><span><br>Código</span></label>
-            <input type="text" id="codigo" placeholder="Ejemplo: ABC123">
+            <input type="text" id="codigo" placeholder="Ejemplo: ABC123" oninput="generarTextoDescripcion()">
         </div>
 
         <div class="titulo-label2">
             <label for="precio"><span><br>Precio</span></label>
-            <input type="text" id="precio" placeholder="Ejemplo: ¢2500">
+            <input type="text" id="precio" placeholder="Ejemplo: ¢2500" oninput="generarTextoDescripcion()">
         </div>
 
         <div class="titulo-label2">
             <label for="condicion"><span><br>Condición</span></label>
-            <select id="condicion">
+            <select id="condicion" onchange="generarTextoDescripcion()">
                 <option value="Nuevo">Nuevo</option>
                 <option value="Usado A+">Usado A+</option>
                  <option value="Usado A">Usado A</option>
@@ -561,39 +599,78 @@
 
         <div id="contenedorTallas" class="titulo-label2">
             <label for="codigo"><span><br>Escoja la Talla<br></span></label>
-            <div class="size-buttons">
-                <button onclick="selectSize(this,'1-2')">1-2</button>
-                <button onclick="selectSize(this,'3-4')">3-4</button>
-                <button onclick="selectSize(this,'5-6')">5-6</button>
-                <button onclick="selectSize(this,'7-8')">7-8</button>
-                <button onclick="selectSize(this,'9-10')">9-10</button>
-                <button onclick="selectSize(this,'24')">12</button>
-                <button onclick="selectSize(this,'26')">14</button>
-                <button onclick="selectSize(this,'28')">16</button>
-                <button onclick="selectSize(this,'24')">18</button>
-                <button onclick="selectSize(this,'26')">20</button>
-                <button onclick="selectSize(this,'28')">22</button>
-                <button onclick="selectSize(this,'24')">24</button>
-                <button onclick="selectSize(this,'26')">26</button>
-                <button onclick="selectSize(this,'28')">28</button>
-                <button onclick="selectSize(this,'30')">30</button>
-                <button onclick="selectSize(this,'32')">32</button>
-                <button onclick="selectSize(this,'34')">34</button>
-                <button onclick="selectSize(this,'36')">36</button>
-                <button onclick="selectSize(this,'38')">38</button>
-                <button onclick="selectSize(this,'40')">40</button>
-                <button onclick="selectSize(this,'41')">41</button>
-                <button onclick="selectSize(this,'42')">42</button>
-                <button onclick="selectSize(this,'43')">43</button>
-                <button onclick="selectSize(this,'XS')">XS</button>
-                <button onclick="selectSize(this,'S')">S</button>
-                <button onclick="selectSize(this,'M')">M</button>
-                <button onclick="selectSize(this,'L')">L</button>
-                <button onclick="selectSize(this,'XL')">XL</button>
-                <button onclick="selectSize(this,'2XL')">2XL</button>
-                <button onclick="selectSize(this,'3XL')">3XL</button>
-                <button onclick="selectSize(this,'Surtido')">Surtido</button>
+            
+            <!-- Tallas para Dama -->
+            <div id="tallasDama" class="talla-group hidden">
+                <div class="talla-group-title">Tallas Dama</div>
+                <div class="talla-buttons-container">
+                    <button onclick="selectSize(this,'XS')">XS</button>
+                    <button onclick="selectSize(this,'S')">S</button>
+                    <button onclick="selectSize(this,'M')">M</button>
+                    <button onclick="selectSize(this,'L')">L</button>
+                    <button onclick="selectSize(this,'XL')">XL</button>
+                    <button onclick="selectSize(this,'2XL')">2XL</button>
+                    <button onclick="selectSize(this,'3XL')">3XL</button>
+                </div>
             </div>
+            
+            <!-- Tallas para Caballero -->
+            <div id="tallasCaballero" class="talla-group hidden">
+                <div class="talla-group-title">Tallas Caballero</div>
+                <div class="talla-buttons-container">
+                    <button onclick="selectSize(this,'S')">S</button>
+                    <button onclick="selectSize(this,'M')">M</button>
+                    <button onclick="selectSize(this,'L')">L</button>
+                    <button onclick="selectSize(this,'XL')">XL</button>
+                    <button onclick="selectSize(this,'2XL')">2XL</button>
+                    <button onclick="selectSize(this,'3XL')">3XL</button>
+                    <button onclick="selectSize(this,'38')">38</button>
+                    <button onclick="selectSize(this,'40')">40</button>
+                    <button onclick="selectSize(this,'42')">42</button>
+                    <button onclick="selectSize(this,'44')">44</button>
+                </div>
+            </div>
+            
+            <!-- Tallas para Niño/Niña -->
+            <div id="tallasNinos" class="talla-group hidden">
+                <div class="talla-group-title">Tallas Niños/Niñas</div>
+                <div class="talla-buttons-container">
+                    <button onclick="selectSize(this,'1-2')">1-2</button>
+                    <button onclick="selectSize(this,'3-4')">3-4</button>
+                    <button onclick="selectSize(this,'5-6')">5-6</button>
+                    <button onclick="selectSize(this,'7-8')">7-8</button>
+                    <button onclick="selectSize(this,'9-10')">9-10</button>
+                    <button onclick="selectSize(this,'12')">12</button>
+                    <button onclick="selectSize(this,'14')">14</button>
+                    <button onclick="selectSize(this,'16')">16</button>
+                </div>
+            </div>
+            
+            <!-- Tallas para Zapatos -->
+            <div id="tallasZapatos" class="talla-group hidden">
+                <div class="talla-group-title">Tallas Zapatos</div>
+                <div class="talla-buttons-container">
+                    <button onclick="selectSize(this,'35')">35</button>
+                    <button onclick="selectSize(this,'36')">36</button>
+                    <button onclick="selectSize(this,'37')">37</button>
+                    <button onclick="selectSize(this,'38')">38</button>
+                    <button onclick="selectSize(this,'39')">39</button>
+                    <button onclick="selectSize(this,'40')">40</button>
+                    <button onclick="selectSize(this,'41')">41</button>
+                    <button onclick="selectSize(this,'42')">42</button>
+                    <button onclick="selectSize(this,'43')">43</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="hashtag-container">
+            <label for="hashtags"><span>Hashtags (se generan automáticamente)</span></label>
+            <textarea id="hashtags" placeholder="Hashtags para la publicación..."></textarea>
+        </div>
+
+        <div class="texto-descripcion-container">
+            <label for="textoDescripcion"><span>Texto para la publicación</span></label>
+            <textarea id="textoDescripcion" placeholder="Texto descriptivo para la publicación..."></textarea>
         </div>
 
         <br>
@@ -601,7 +678,7 @@
         <div class="titulo-label2" style="display:flex; align-items:center; justify-content:center; gap:10px;">
             <div style="color:#ff00e1; font-weight:600;">Marco</div>
             <label class="switch">
-                <input type="checkbox" id="toggleMarco" checked>
+                <input type="checkbox" id="toggleMarco" checked onchange="actualizarVistaPrevia()">
                 <span class="slider"></span>
             </label>
         </div>
@@ -609,6 +686,7 @@
         <!-- Botón para generar ambos -->
         <div class="fila-actions" style="margin-top: 20px;">
             <button id="generarAmbosBtn">Generar Feed + Historia</button>
+            <button onclick="copiarTexto()">Copiar Texto</button>
         </div>
 
         <!-- Contenedor de los canvases -->
@@ -656,6 +734,9 @@
             };
         }
 
+        // Variables globales
+        let tallaSeleccionada = "";
+
         // Mostrar login inicialmente
         document.getElementById("login").style.display = "block";
         
@@ -679,7 +760,6 @@
         /* Preview de imagen */
         const preview = document.getElementById("preview");
         const toggleMarco = document.getElementById("toggleMarco");
-        let tallaSeleccionada = "";
         
         document.getElementById('productoInput').addEventListener("change", e=>{
             const file = e.target.files[0];
@@ -688,6 +768,7 @@
                 reader.onload = event=>{
                     preview.src = event.target.result;
                     preview.style.display="block";
+                    actualizarVistaPrevia();
                 };
                 reader.readAsDataURL(file);
             }
@@ -698,21 +779,182 @@
             const categoria = document.getElementById("categoria").value;
             const contenedorTallas = document.getElementById("contenedorTallas");
             
+            // Ocultar todos los grupos de tallas primero
+            document.querySelectorAll('.talla-group').forEach(group => {
+                group.classList.add('hidden');
+            });
+            
             // Mostrar solo para categorías que requieren tallas
-            if (categoria === "Dama" || categoria === "Caballero" || categoria === "Niño" || categoria === "Niña") {
+            if (categoria === "Dama" || categoria === "Caballero" || categoria === "Niño" || categoria === "Niña" || 
+                categoria === "Accesorios" || categoria === "Bolsos y Mochilas") {
                 contenedorTallas.classList.remove("hidden");
+                
+                // Mostrar el grupo de tallas correspondiente
+                if (categoria === "Dama") {
+                    document.getElementById('tallasDama').classList.remove('hidden');
+                } else if (categoria === "Caballero") {
+                    document.getElementById('tallasCaballero').classList.remove('hidden');
+                } else if (categoria === "Niño" || categoria === "Niña") {
+                    document.getElementById('tallasNinos').classList.remove('hidden');
+                } else if (categoria === "Accesorios" || categoria === "Bolsos y Mochilas") {
+                    document.getElementById('tallasZapatos').classList.remove('hidden');
+                }
             } else {
                 contenedorTallas.classList.add("hidden");
                 tallaSeleccionada = ""; // Limpiar talla seleccionada
                 document.querySelectorAll(".size-buttons button").forEach(b => b.classList.remove("active"));
             }
+            
+            generarHashtags();
+            generarTextoDescripcion();
         }
         
         /* Selección de talla */
-        function selectSize(button,talla){
-            document.querySelectorAll(".size-buttons button").forEach(b=>b.classList.remove("active"));
-            button.classList.add("active");
+        function selectSize(button, talla){
+            // Desactivar todos los botones del mismo grupo
+            const parentGroup = button.closest('.talla-group');
+            parentGroup.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            
+            // Activar el botón seleccionado
+            button.classList.add('active');
             tallaSeleccionada = talla;
+            
+            generarTextoDescripcion();
+            actualizarVistaPrevia();
+        }
+        
+        /* Generar hashtags automáticos */
+        function generarHashtags() {
+            const categoria = document.getElementById("categoria").value;
+            const condicion = document.getElementById("condicion").value;
+            let hashtags = "";
+            
+            // Hashtags base
+            hashtags += "#EcoEstilo #ModaSostenible #SegundaMano ";
+            
+            // Hashtags por categoría
+            switch(categoria) {
+                case "Dama":
+                    hashtags += "#ModaMujer #RopaMujer #ModaFemenina #RopaUsada #RopaAmericana ";
+                    break;
+                case "Caballero":
+                    hashtags += "#ModaHombre #RopaHombre #EstiloMasculino #RopaUsada #RopaAmericana ";
+                    break;
+                case "Niño":
+                    hashtags += "#ModaInfantil #RopaNiños #RopaNino #RopaUsada #RopaAmericana ";
+                    break;
+                case "Niña":
+                    hashtags += "#ModaInfantil #RopaNiñas #RopaNina #RopaUsada #RopaAmericana ";
+                    break;
+                case "Juguete":
+                    hashtags += "#Juguetes #Juegos #DiversiónInfantil #JuguetesUsados ";
+                    break;
+                case "Accesorios":
+                    hashtags += "#AccesoriosModa #Complementos #Estilo #AccesoriosUsados ";
+                    break;
+                case "Bolsos y Mochilas":
+                    hashtags += "#Bolsos #Mochilas #Accesorios #BolsosUsados #MochilasUsadas ";
+                    break;
+                default:
+                    hashtags += "#Moda #Estilo #RopaUsada #RopaAmericana ";
+            }
+            
+            // Hashtags por condición
+            if (condicion === "Nuevo") {
+                hashtags += "#ProductoNuevo #Nuevo #SiempreNuevo ";
+            } else {
+                hashtags += "#SegundaMano #UsadoComoNuevo #ModaCircular #RopaEcologica ";
+            }
+            
+            // Hashtags adicionales
+            hashtags += "#ModaEconómica #Ofertas #Ganga #ComprasInteligentes #CostaRica #ModaCR";
+            
+            document.getElementById("hashtags").value = hashtags;
+        }
+        
+        /* Generar texto descriptivo */
+        function generarTextoDescripcion() {
+            const categoria = document.getElementById("categoria").value;
+            const descripcion = document.getElementById("descripcion").value;
+            const marca = document.getElementById("marca").value;
+            const precio = document.getElementById("precio").value;
+            const condicion = document.getElementById("condicion").value;
+            
+            let emojiCategoria = "👚";
+            let textoCategoria = "¡Elegancia y estilo a un precio increíble!";
+            
+            // Definir emoji y texto según categoría
+            switch(categoria) {
+                case "Dama":
+                    emojiCategoria = "👚";
+                    textoCategoria = "¡Elegancia y estilo a un precio increíble!";
+                    break;
+                case "Caballero":
+                    emojiCategoria = "👔";
+                    textoCategoria = "¡Estilo masculino con las mejores marcas!";
+                    break;
+                case "Niño":
+                    emojiCategoria = "👦";
+                    textoCategoria = "¡Ropa divertida y cómoda para los más pequeños!";
+                    break;
+                case "Niña":
+                    emojiCategoria = "👧";
+                    textoCategoria = "¡Ropa adorable para las princesas de la casa!";
+                    break;
+                case "Juguete":
+                    emojiCategoria = "🧸";
+                    textoCategoria = "¡Diversión garantizada para los más pequeños!";
+                    break;
+                case "Accesorios":
+                    emojiCategoria = "🕶️";
+                    textoCategoria = "¡Complementa tu look con nuestros accesorios!";
+                    break;
+                case "Bolsos y Mochilas":
+                    emojiCategoria = "👜";
+                    textoCategoria = "¡Lleva tu estilo a todas partes!";
+                    break;
+                default:
+                    emojiCategoria = "🛍️";
+                    textoCategoria = "¡Encuentra lo que necesitas a un precio excelente!";
+            }
+            
+            let texto = "";
+            
+            // Construir el texto descriptivo
+            texto += `${emojiCategoria}✨ ${textoCategoria} ✨${emojiCategoria}\n\n`;
+            
+            if (descripcion) {
+                texto += `💖 ${descripcion} 💖\n`;
+            }
+            
+            if (marca) {
+                texto += `⚜️ Marca: ${marca} \n`;
+            }
+            
+            if (tallaSeleccionada) {
+                texto += `🌟 Talla ${tallaSeleccionada} – Perfecta para lucir\n`;
+            }
+            
+            if (precio) {
+                texto += `💲 Precio especial: SOLO ₡${precio} 💲\n`;
+            }
+            
+            texto += `🛍️ Única disponible, no te quedes sin la tuya.\n`;
+            texto += `📩 ¿Te interesa? Escríbenos para más detalles.\n`;
+            texto += `📲 Contáctanos al 8993 1697\n`;
+            texto += `🌿 Eco Tendencia a tu Estilo 🌿\n`;
+            texto += `💃♻️ Únete a la moda circular y viste con conciencia ♻️`;
+            
+            document.getElementById("textoDescripcion").value = texto;
+        }
+        
+        /* Copiar texto al portapapeles */
+        function copiarTexto() {
+            const textoDescripcion = document.getElementById("textoDescripcion");
+            textoDescripcion.select();
+            textoDescripcion.setSelectionRange(0, 99999); // Para dispositivos móviles
+            document.execCommand("copy");
+            alert("Texto copiado al portapapeles");
         }
         
         /* Dibujo de producto + textos */
@@ -903,7 +1145,8 @@
             }
             
             const categoria = document.getElementById('categoria').value;
-            if(categoria === "Dama" || categoria === "Caballero" || categoria === "Niño" || categoria === "Niña") {
+            if(categoria === "Dama" || categoria === "Caballero" || categoria === "Niño" || categoria === "Niña" || 
+               categoria === "Accesorios" || categoria === "Bolsos y Mochilas") {
                 if(!tallaSeleccionada) {
                     alert("Seleccione una talla");
                     return false;
@@ -921,6 +1164,41 @@
             }
             
             return true;
+        }
+        
+        /* Actualizar vista previa */
+        function actualizarVistaPrevia() {
+            if (!document.getElementById('productoInput').files[0]) return;
+            
+            const fileInput = document.getElementById('productoInput');
+            const reader = new FileReader();
+            
+            reader.onload = e => {
+                const img = new Image();
+                img.onload = () => {
+                    // Actualizar feed
+                    dibujarCanvas(
+                        document.getElementById('canvasFeed').getContext('2d'),
+                        document.getElementById('canvasFeed'),
+                        img,
+                        './fondo.png',
+                        1080,
+                        1080
+                    );
+                    
+                    // Actualizar historia
+                    dibujarCanvas(
+                        document.getElementById('canvasHistoria').getContext('2d'),
+                        document.getElementById('canvasHistoria'),
+                        img,
+                        './fondo2.png',
+                        1080,
+                        1920
+                    );
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(fileInput.files[0]);
         }
         
         /* Generar ambos (Feed + Historia) */
@@ -989,8 +1267,10 @@
         document.getElementById('descargarFeedBtn').addEventListener('click', descargarFeed);
         document.getElementById('descargarHistoriaBtn').addEventListener('click', descargarHistoria);
         
-        // Inicializar estado de las tallas
+        // Inicializar estado de las tallas y hashtags
         toggleTallas();
+        generarHashtags();
+        generarTextoDescripcion();
     </script>
 </body>
 </html>
