@@ -499,14 +499,32 @@
             }
         }
         
-        /* Nuevos estilos para las mejoras */
-        .hashtag-container, .texto-descripcion-container {
-            margin: 15px 0;
+        /* NUEVOS ESTILOS PARA EL TEXTO COMBINADO */
+        .texto-combinado-container {
+            margin: 20px 0;
         }
         
-        .hashtag-container textarea, .texto-descripcion-container textarea {
-            min-height: 80px;
+        .texto-combinado-container textarea {
+            min-height: 180px;
             resize: vertical;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .boton-copiar-container {
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        .boton-copiar-container button {
+            background: linear-gradient(45deg, #ff66b2, #66e0ff);
+            padding: 10px 25px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .boton-copiar-container button:hover {
+            background: linear-gradient(45deg, #ff3399, #33ccff);
         }
         
         .talla-group {
@@ -526,13 +544,21 @@
             gap: 8px;
             justify-content: center;
         }
+        
+        .no-marca-checkbox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
     <!-- LOGIN -->
     <div id="login" class="pantalla h1">
         <img src="logo.png" alt="Inicio" class="login-img">
-        <h2>Hola Darksssss.....<br>Bienvenida a la App de Eco Estilo</h2>
+        <h2>Hola Ashley.<br>Bienvenida a la App de Eco Estilo</h2>
         <input type="text" id="usuario" placeholder="Usuario">
         <input type="password" id="clave" placeholder="Contraseña">
         <button onclick="login()">Ingresar y Empezar</button>
@@ -546,7 +572,7 @@
 
         <div class="image-upload-container">
             <label for="productoInput" class="custom-file-label">
-                Selecciona una imagen
+                Selecciona una imagen o foto
                 <input type="file" id="productoInput" accept="image/*">
             </label>
             <img id="preview" class="preview" src="" alt="Vista previa">
@@ -554,12 +580,12 @@
 
         <div class="titulo-label2">
             <label for="categoria"><span><br>Categoría</span></label>
-            <select id="categoria" onchange="toggleTallas(); generarHashtags(); generarTextoDescripcion();">
+            <select id="categoria" onchange="toggleTallas(); generarTextoCombinado();">
                 <option value="Dama">Dama</option>
                 <option value="Caballero">Caballero</option>
                 <option value="Niño">Niño</option>
                 <option value="Niña">Niña</option>
-                <option value="Juguete">Juguete</option>
+                <option value="Juguete">Juguetes</option>
                 <option value="Accesorios">Accesorios</option>
                 <option value="Bolsos y Mochilas">Bolsos y Mochilas</option>
                 <option value="Otros">Otros</option>
@@ -568,27 +594,31 @@
 
         <div class="titulo-label2">
             <label for="descripcion"><span><br>Descripción del Producto</span></label>
-            <input type="text" id="descripcion" placeholder="Ejemplo: Blusa corta blanca" oninput="generarTextoDescripcion()">
+            <input type="text" id="descripcion" placeholder="Ejemplo: Blusa corta blanca" oninput="generarTextoCombinado()">
         </div>
 
         <div class="titulo-label2">
             <label for="marca"><span><br>Marca</span></label>
-            <input type="text" id="marca" placeholder="Ejemplo: Hollister" oninput="generarTextoDescripcion()">
+            <input type="text" id="marca" placeholder="Ejemplo: Hollister" oninput="generarTextoCombinado()">
+            <div class="no-marca-checkbox">
+                <input type="checkbox" id="noMarca" onchange="toggleMarcaField()">
+                <label for="noMarca" style="font-size: 14px; color: #666;">Sin marca</label>
+            </div>
         </div>
 
         <div class="titulo-label2">
             <label for="codigo"><span><br>Código</span></label>
-            <input type="text" id="codigo" placeholder="Ejemplo: ABC123" oninput="generarTextoDescripcion()">
+            <input type="text" id="codigo" placeholder="Ejemplo: ABC123" oninput="generarTextoCombinado()">
         </div>
 
         <div class="titulo-label2">
             <label for="precio"><span><br>Precio</span></label>
-            <input type="text" id="precio" placeholder="Ejemplo: ¢2500" oninput="generarTextoDescripcion()">
+            <input type="text" id="precio" placeholder="Ejemplo: ¢2500" oninput="generarTextoCombinado()">
         </div>
 
         <div class="titulo-label2">
             <label for="condicion"><span><br>Condición</span></label>
-            <select id="condicion" onchange="generarTextoDescripcion()">
+            <select id="condicion" onchange="generarTextoCombinado()">
                 <option value="Nuevo">Nuevo</option>
                 <option value="Usado A+">Usado A+</option>
                  <option value="Usado A">Usado A</option>
@@ -611,6 +641,20 @@
                     <button onclick="selectSize(this,'XL')">XL</button>
                     <button onclick="selectSize(this,'2XL')">2XL</button>
                     <button onclick="selectSize(this,'3XL')">3XL</button>
+                    <button onclick="selectSize(this,'4XL')">4XL</button>
+                    <button onclick="selectSize(this,'28')">28</button>
+                    <button onclick="selectSize(this,'30')">30</button>
+                    <button onclick="selectSize(this,'32')">32</button>
+                    <button onclick="selectSize(this,'34')">34</button>
+                    <button onclick="selectSize(this,'36')">36</button>
+                    <button onclick="selectSize(this,'38')">38</button>
+                    <button onclick="selectSize(this,'40')">40</button>
+                    <button onclick="selectSize(this,'1-2')">1-2</button>
+                    <button onclick="selectSize(this,'3-4')">3-4</button>
+                    <button onclick="selectSize(this,'5-6')">5-6</button>
+                    <button onclick="selectSize(this,'5-6')">6-7</button>
+                    <button onclick="selectSize(this,'5-6')">8-9</button>
+                    <button onclick="selectSize(this,'Única')">Única</button>
                 </div>
             </div>
             
@@ -618,16 +662,26 @@
             <div id="tallasCaballero" class="talla-group hidden">
                 <div class="talla-group-title">Tallas Caballero</div>
                 <div class="talla-buttons-container">
+                    <button onclick="selectSize(this,'XS')">XS</button>
                     <button onclick="selectSize(this,'S')">S</button>
                     <button onclick="selectSize(this,'M')">M</button>
                     <button onclick="selectSize(this,'L')">L</button>
                     <button onclick="selectSize(this,'XL')">XL</button>
                     <button onclick="selectSize(this,'2XL')">2XL</button>
                     <button onclick="selectSize(this,'3XL')">3XL</button>
+                    <button onclick="selectSize(this,'4XL')">4XL</button>
+                    <button onclick="selectSize(this,'28')">28</button>
+                    <button onclick="selectSize(this,'30')">30</button>
+                    <button onclick="selectSize(this,'32')">32</button>
+                    <button onclick="selectSize(this,'34')">34</button>
+                    <button onclick="selectSize(this,'36')">36</button>
                     <button onclick="selectSize(this,'38')">38</button>
                     <button onclick="selectSize(this,'40')">40</button>
                     <button onclick="selectSize(this,'42')">42</button>
                     <button onclick="selectSize(this,'44')">44</button>
+                    <button onclick="selectSize(this,'46')">46</button>
+                    <button onclick="selectSize(this,'48')">48</button>
+                    <button onclick="selectSize(this,'Única')">Única</button>
                 </div>
             </div>
             
@@ -635,14 +689,26 @@
             <div id="tallasNinos" class="talla-group hidden">
                 <div class="talla-group-title">Tallas Niños/Niñas</div>
                 <div class="talla-buttons-container">
+                    <button onclick="selectSize(this,'0-3M')">0-3M</button>
+                    <button onclick="selectSize(this,'3-6M')">3-6M</button>
+                    <button onclick="selectSize(this,'6-9M')">6-9M</button>
+                    <button onclick="selectSize(this,'9-12M')">9-12M</button>
+                    <button onclick="selectSize(this,'12-18M')">12-18M</button>
+                    <button onclick="selectSize(this,'18-24M')">18-24M</button>
                     <button onclick="selectSize(this,'1-2')">1-2</button>
+                    <button onclick="selectSize(this,'2T')">2T</button>
+                    <button onclick="selectSize(this,'3T')">3T</button>
+                    <button onclick="selectSize(this,'4T')">4T</button>
+                    <button onclick="selectSize(this,'5T')">5T</button>
                     <button onclick="selectSize(this,'3-4')">3-4</button>
                     <button onclick="selectSize(this,'5-6')">5-6</button>
                     <button onclick="selectSize(this,'7-8')">7-8</button>
                     <button onclick="selectSize(this,'9-10')">9-10</button>
+                    <button onclick="selectSize(this,'11-12')">11-12</button>
                     <button onclick="selectSize(this,'12')">12</button>
                     <button onclick="selectSize(this,'14')">14</button>
                     <button onclick="selectSize(this,'16')">16</button>
+                    <button onclick="selectSize(this,'Única')">Única</button>
                 </div>
             </div>
             
@@ -650,6 +716,8 @@
             <div id="tallasZapatos" class="talla-group hidden">
                 <div class="talla-group-title">Tallas Zapatos</div>
                 <div class="talla-buttons-container">
+                    <button onclick="selectSize(this,'33')">33</button>
+                    <button onclick="selectSize(this,'34')">34</button>
                     <button onclick="selectSize(this,'35')">35</button>
                     <button onclick="selectSize(this,'36')">36</button>
                     <button onclick="selectSize(this,'37')">37</button>
@@ -659,18 +727,28 @@
                     <button onclick="selectSize(this,'41')">41</button>
                     <button onclick="selectSize(this,'42')">42</button>
                     <button onclick="selectSize(this,'43')">43</button>
+                    <button onclick="selectSize(this,'44')">44</button>
+                    <button onclick="selectSize(this,'45')">45</button>
+                    <button onclick="selectSize(this,'5')">5</button>
+                    <button onclick="selectSize(this,'6')">6</button>
+                    <button onclick="selectSize(this,'7')">7</button>
+                    <button onclick="selectSize(this,'8')">8</button>
+                    <button onclick="selectSize(this,'9')">9</button>
+                    <button onclick="selectSize(this,'10')">10</button>
+                    <button onclick="selectSize(this,'11')">11</button>
+                    <button onclick="selectSize(this,'12')">12</button>
+                    <button onclick="selectSize(this,'Única')">Única</button>
                 </div>
             </div>
         </div>
 
-        <div class="hashtag-container">
-            <label for="hashtags"><span>Hashtags (se generan automáticamente)</span></label>
-            <textarea id="hashtags" placeholder="Hashtags para la publicación..."></textarea>
-        </div>
-
-        <div class="texto-descripcion-container">
-            <label for="textoDescripcion"><span>Texto para la publicación</span></label>
-            <textarea id="textoDescripcion" placeholder="Texto descriptivo para la publicación..."></textarea>
+        <!-- TEXTO COMBINADO - DESCRIPCIÓN + HASHTAGS -->
+        <div class="texto-combinado-container">
+            <label for="textoCombinado"><span>Texto para la publicación + Hashtags</span></label>
+            <textarea id="textoCombinado" placeholder="Texto descriptivo y hashtags para la publicación..."></textarea>
+            <div class="boton-copiar-container">
+                <button onclick="copiarTextoCombinado()">Copiar Texto Completo</button>
+            </div>
         </div>
 
         <br>
@@ -686,7 +764,6 @@
         <!-- Botón para generar ambos -->
         <div class="fila-actions" style="margin-top: 20px;">
             <button id="generarAmbosBtn">Generar Feed + Historia</button>
-            <button onclick="copiarTexto()">Copiar Texto</button>
         </div>
 
         <!-- Contenedor de los canvases -->
@@ -696,7 +773,7 @@
                 <div style="font-family: 'Poppins', sans-serif; color: #54f983; font-weight: 400; text-align: center; font-size: 1.5rem;"> Feed </div>
                 <canvas id="canvasFeed" width="1080" height="1080"></canvas>
                 <div class="fila-actions">
-                    <button id="descargarFeedBtn">Descargar Feed</button>
+                    <button id="descargarFeedBtn">Descargar Imagen Para Feed</button>
                 </div>
             </div>
 
@@ -705,7 +782,7 @@
                 <div style="font-family: 'Poppins', sans-serif; color: #e98e1e; font-weight: 400; text-align: center; font-size: 1.5rem;"> Historia </div>
                 <canvas id="canvasHistoria" width="1080" height="1920"></canvas>
                 <div class="fila-actions">
-                    <button id="descargarHistoriaBtn">Descargar Historia</button>
+                    <button id="descargarHistoriaBtn">Descargar Imagen Para Historia</button>
                 </div>
             </div>
         </div>
@@ -757,6 +834,22 @@
             }
         }
         
+        // Función para mostrar/ocultar campo de marca
+        function toggleMarcaField() {
+            const marcaInput = document.getElementById("marca");
+            const noMarcaCheckbox = document.getElementById("noMarca");
+            
+            if (noMarcaCheckbox.checked) {
+                marcaInput.disabled = true;
+                marcaInput.value = "";
+                marcaInput.placeholder = "Sin marca";
+            } else {
+                marcaInput.disabled = false;
+                marcaInput.placeholder = "Ejemplo: Hollister";
+            }
+            generarTextoCombinado();
+        }
+        
         /* Preview de imagen */
         const preview = document.getElementById("preview");
         const toggleMarco = document.getElementById("toggleMarco");
@@ -805,8 +898,7 @@
                 document.querySelectorAll(".size-buttons button").forEach(b => b.classList.remove("active"));
             }
             
-            generarHashtags();
-            generarTextoDescripcion();
+            generarTextoCombinado();
         }
         
         /* Selección de talla */
@@ -819,7 +911,7 @@
             button.classList.add('active');
             tallaSeleccionada = talla;
             
-            generarTextoDescripcion();
+            generarTextoCombinado();
             actualizarVistaPrevia();
         }
         
@@ -869,16 +961,17 @@
             // Hashtags adicionales
             hashtags += "#ModaEconómica #Ofertas #Ganga #ComprasInteligentes #CostaRica #ModaCR";
             
-            document.getElementById("hashtags").value = hashtags;
+            return hashtags;
         }
         
-        /* Generar texto descriptivo */
-        function generarTextoDescripcion() {
+        /* Generar texto combinado (descripción + hashtags) */
+        function generarTextoCombinado() {
             const categoria = document.getElementById("categoria").value;
             const descripcion = document.getElementById("descripcion").value;
             const marca = document.getElementById("marca").value;
             const precio = document.getElementById("precio").value;
             const condicion = document.getElementById("condicion").value;
+            const noMarca = document.getElementById("noMarca").checked;
             
             let emojiCategoria = "👚";
             let textoCategoria = "¡Elegancia y estilo a un precio increíble!";
@@ -927,7 +1020,7 @@
                 texto += `💖 ${descripcion} 💖\n`;
             }
             
-            if (marca) {
+            if (marca && !noMarca) {
                 texto += `⚜️ Marca: ${marca} \n`;
             }
             
@@ -942,22 +1035,27 @@
             texto += `🛍️ Única disponible, no te quedes sin la tuya.\n`;
             texto += `📩 ¿Te interesa? Escríbenos para más detalles.\n`;
             texto += `📲 Contáctanos al 8993 1697\n`;
-            texto += `🌿 Eco Tendencia a tu Estilo 🌿\n`;
-            texto += `💃♻️ Únete a la moda circular y viste con conciencia ♻️`;
+            texto += `📲 Contáctanos al wa.me/50689931697\n`;
+            texto += `🌿 Eco Estilo - Eco Tendencia a tu Estilo 🌿\n`;
+            texto += `💃♻️ Únete a la moda circular y viste con conciencia ♻️\n\n`;
             
-            document.getElementById("textoDescripcion").value = texto;
+            // Agregar hashtags
+            texto += `🔖 HASHTAGS:\n`;
+            texto += `${generarHashtags()}`;
+            
+            document.getElementById("textoCombinado").value = texto;
         }
         
-        /* Copiar texto al portapapeles */
-        function copiarTexto() {
-            const textoDescripcion = document.getElementById("textoDescripcion");
-            textoDescripcion.select();
-            textoDescripcion.setSelectionRange(0, 99999); // Para dispositivos móviles
+        /* Copiar texto combinado al portapapeles */
+        function copiarTextoCombinado() {
+            const textoCombinado = document.getElementById("textoCombinado");
+            textoCombinado.select();
+            textoCombinado.setSelectionRange(0, 99999);
             document.execCommand("copy");
-            alert("Texto copiado al portapapeles");
+            alert("Texto completo copiado al portapapeles");
         }
         
-        /* Dibujo de producto + textos */
+        /* Dibujo de producto + textos - CON CUADRADO MÁS TRANSPARENTE */
         function dibujarProductoTexto(ctx, canvas, imgProducto){
             const maxH = canvas.height * 0.90;
             const maxW = canvas.width * 0.90;
@@ -1027,95 +1125,164 @@
             ctx.drawImage(imgProducto, x, y, w, h);
             ctx.restore();
             
+            // === MEJORAS EN LOS TEXTOS ===
+            
             // Definir dimensiones de la caja de información
             const boxMarginX = canvas.width * 0.05;
-            const boxMarginY = canvas.height * 0.75;
-            const boxWidth = canvas.width * 0.9;
-            const boxHeight = canvas.height * 0.2;
+            let boxMarginY, boxWidth, boxHeight;
             
-            // === CAJA DE INFORMACIÓN ===
-            ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+            if (canvas.height === 1080) { // FEED
+                boxMarginY = canvas.height * 0.70;
+                boxWidth = canvas.width * 0.9;
+                boxHeight = canvas.height * 0.25;
+            } else { // HISTORIA
+                boxMarginY = canvas.height * 0.75;
+                boxWidth = canvas.width * 0.9;
+                boxHeight = canvas.height * 0.20;
+            }
+            
+            // === CAJA DE INFORMACIÓN MÁS TRANSPARENTE ===
+            ctx.fillStyle = "rgba(255, 255, 255, 0.75)"; // Más transparente (75% en lugar de 92%)
             ctx.beginPath();
-            ctx.roundRect(boxMarginX, boxMarginY, boxWidth, boxHeight, 20);
+            ctx.roundRect(boxMarginX, boxMarginY, boxWidth, boxHeight, 25);
             ctx.fill();
+            
+            // Sombra suave para la caja
+            ctx.shadowColor = "rgba(0,0,0,0.2)";
+            ctx.shadowBlur = 15;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 5;
+            ctx.fill();
+            ctx.shadowBlur = 0;
             
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             
             // Coordenadas dentro de la caja
-            const primeraFilaY = boxMarginY + boxHeight * 0.33;
-            const segundaFilaY = boxMarginY + boxHeight * 0.72;
+            const primeraFilaY = boxMarginY + boxHeight * 0.30;
+            const segundaFilaY = boxMarginY + boxHeight * 0.70;
             
-            // Sombra de texto
+            // Sombra de texto más suave
             ctx.shadowColor = "rgba(0,0,0,0.4)";
-            ctx.shadowBlur = 6;
+            ctx.shadowBlur = 8;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
             
             // === AJUSTE DINÁMICO DE FUENTES ===
             let precioFontSize, otrosFontSize, codigoFontSize;
             if (canvas.height === 1080) {
-                // Feed
-                precioFontSize = Math.round(canvas.height * 0.04);
-                otrosFontSize = Math.round(canvas.height * 0.032);
-                codigoFontSize = Math.round(canvas.height * 0.012);
+                precioFontSize = Math.round(canvas.height * 0.045);
+                otrosFontSize = Math.round(canvas.height * 0.035);
+                codigoFontSize = Math.round(canvas.height * 0.018);
             } else if (canvas.height === 1920) {
-                // Historia
-                precioFontSize = Math.round(canvas.height * 0.025);
-                otrosFontSize = Math.round(canvas.height * 0.018);
-                codigoFontSize = Math.round(canvas.height * 0.010);
+                precioFontSize = Math.round(canvas.height * 0.030);
+                otrosFontSize = Math.round(canvas.height * 0.022);
+                codigoFontSize = Math.round(canvas.height * 0.014);
             } else {
                 precioFontSize = Math.round(canvas.height * 0.035);
                 otrosFontSize = Math.round(canvas.height * 0.025);
                 codigoFontSize = Math.round(canvas.height * 0.012);
             }
             
+            // Obtener valores actuales
+            const precio = document.getElementById("precio").value.trim();
+            const categoria = document.getElementById("categoria").value;
+            const condicion = document.getElementById("condicion").value;
+            const codigo = document.getElementById("codigo").value.trim();
+            
             // === PRECIO ===
-            ctx.font = `900 ${precioFontSize}px Poppins`;
-            ctx.fillStyle = "#32cd32";
-            ctx.fillText(
-                "Precio: ¢" + document.getElementById("precio").value.trim(),
-                canvas.width * 0.25,
-                primeraFilaY
-            );
+            if (precio) {
+                ctx.font = `900 ${precioFontSize}px Poppins`;
+                ctx.fillStyle = "#27ae60";
+                ctx.fillText(
+                    `₡${precio}`,
+                    canvas.width * 0.25,
+                    primeraFilaY
+                );
+                
+                ctx.font = `600 ${otrosFontSize * 0.7}px Poppins`;
+                ctx.fillStyle = "#2ecc71";
+                ctx.fillText(
+                    "PRECIO",
+                    canvas.width * 0.25,
+                    primeraFilaY - precioFontSize * 0.8
+                );
+            }
             
             // === TALLA ===
             if (tallaSeleccionada) {
-                ctx.fillStyle = "#ff69b4";
+                ctx.font = `900 ${precioFontSize}px Poppins`;
+                ctx.fillStyle = "#e84393";
                 ctx.fillText(
-                    "Talla: " + tallaSeleccionada,
+                    tallaSeleccionada,
                     canvas.width * 0.75,
                     primeraFilaY
+                );
+                
+                ctx.font = `600 ${otrosFontSize * 0.7}px Poppins`;
+                ctx.fillStyle = "#fd79a8";
+                ctx.fillText(
+                    "TALLA",
+                    canvas.width * 0.75,
+                    primeraFilaY - precioFontSize * 0.8
                 );
             }
             
             // === CATEGORÍA ===
             ctx.font = `700 ${otrosFontSize}px Poppins`;
-            ctx.fillStyle = "#6666ff";
+            ctx.fillStyle = "#6c5ce7";
             ctx.fillText(
-                "Categoría: " + document.getElementById("categoria").value,
+                categoria.toUpperCase(),
                 canvas.width * 0.25,
                 segundaFilaY
             );
             
-            // === CONDICIÓN ===
-            ctx.fillStyle = "#ff7f50";
+            ctx.font = `600 ${otrosFontSize * 0.7}px Poppins`;
+            ctx.fillStyle = "#a29bfe";
             ctx.fillText(
-                "Condición: " + document.getElementById("condicion").value,
+                "CATEGORÍA",
+                canvas.width * 0.25,
+                segundaFilaY - otrosFontSize * 0.9
+            );
+            
+            // === CONDICIÓN ===
+            ctx.font = `700 ${otrosFontSize}px Poppins`;
+            ctx.fillStyle = "#e17055";
+            ctx.fillText(
+                condicion.toUpperCase(),
                 canvas.width * 0.75,
                 segundaFilaY
             );
             
+            ctx.font = `600 ${otrosFontSize * 0.7}px Poppins`;
+            ctx.fillStyle = "#fab1a0";
+            ctx.fillText(
+                "CONDICIÓN",
+                canvas.width * 0.75,
+                segundaFilaY - otrosFontSize * 0.9
+            );
+            
             // Reset de sombra
             ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
             
             /* Código en esquina superior izquierda */
             ctx.save();
             ctx.font = `bold ${codigoFontSize}px Poppins`;
-            ctx.fillStyle = "pink";
+            ctx.fillStyle = "rgba(255, 105, 180, 0.9)";
             ctx.textAlign = "left";
             ctx.textBaseline = "top";
-            let codigoTexto = document.getElementById('codigo').value.trim();
-            ctx.fillText("Código", 30, 35);
-            ctx.fillText(codigoTexto, 30, 55);
+            
+            // Fondo para el código (también más transparente)
+            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+            ctx.roundRect(20, 20, 120, 50, 10).fill();
+            
+            ctx.fillStyle = "#ff69b4";
+            ctx.font = `600 ${codigoFontSize * 1.2}px Poppins`;
+            ctx.fillText("CÓDIGO", 35, 30);
+            ctx.font = `800 ${codigoFontSize * 1.4}px Poppins`;
+            ctx.fillText(codigo, 35, 55);
             ctx.restore();
         }
         
@@ -1127,11 +1294,13 @@
             const fondo = new Image();
             fondo.src = fondoSrc;
             fondo.onload = ()=> {
+                ctx.globalAlpha = 0.9;
                 ctx.drawImage(fondo,0,0,canvas.width,canvas.height);
+                ctx.globalAlpha = 1.0;
                 dibujarProductoTexto(ctx, canvas, imgProducto);
             };
             fondo.onerror = ()=> {
-                ctx.fillStyle = "#ffffff";
+                ctx.fillStyle = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
                 ctx.fillRect(0,0,canvas.width,canvas.height);
                 dibujarProductoTexto(ctx, canvas, imgProducto);
             };
@@ -1176,7 +1345,6 @@
             reader.onload = e => {
                 const img = new Image();
                 img.onload = () => {
-                    // Actualizar feed
                     dibujarCanvas(
                         document.getElementById('canvasFeed').getContext('2d'),
                         document.getElementById('canvasFeed'),
@@ -1186,7 +1354,6 @@
                         1080
                     );
                     
-                    // Actualizar historia
                     dibujarCanvas(
                         document.getElementById('canvasHistoria').getContext('2d'),
                         document.getElementById('canvasHistoria'),
@@ -1267,10 +1434,9 @@
         document.getElementById('descargarFeedBtn').addEventListener('click', descargarFeed);
         document.getElementById('descargarHistoriaBtn').addEventListener('click', descargarHistoria);
         
-        // Inicializar estado de las tallas y hashtags
+        // Inicializar estado de las tallas y texto combinado
         toggleTallas();
-        generarHashtags();
-        generarTextoDescripcion();
+        generarTextoCombinado();
     </script>
 </body>
 </html>
